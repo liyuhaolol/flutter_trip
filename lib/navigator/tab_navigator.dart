@@ -21,7 +21,7 @@ class _TabNavigatorState extends State<TabNavigator>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("我就测试一下"),),
+      //appBar: AppBar(title: Text("我就测试一下"),),
       body: PageView(
         controller: _controller,
         children: <Widget>[
