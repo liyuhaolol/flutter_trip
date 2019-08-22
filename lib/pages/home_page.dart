@@ -14,26 +14,47 @@ class _HomePageState extends State<HomePage>{
     'https://dimg04.c-ctrip.com/images/700c10000000pdili7D8B_780_235_57.jpg'
   ];
 
+  _onScroll(offset){
+    print(offset);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          children: <Widget>[
-            Container(
-              height: 160,
-              child: Swiper(
-                itemCount: _imageUrls.length,
-                autoplay: true,
-                itemBuilder: (BuildContext context, int index){
-                  return Image.network(_imageUrls[index],fit: BoxFit.fill,);
-                },
-                pagination: SwiperPagination(),
-              ),
-            )
-          ],
-        )
-      ),
+      body: MediaQuery.removePadding(
+          context: context,
+          removeTop: true,
+          child: NotificationListener(
+            child: ListView(
+              children: <Widget>[
+                Container(
+                  height: 160,
+                  child:Swiper(
+                    itemCount: _imageUrls.length,
+                    autoplay: true,
+                    itemBuilder: (BuildContext context, int index){
+                      return Image.network(_imageUrls[index],fit: BoxFit.fill,);
+                      },
+                    pagination: SwiperPagination(),
+                  ),
+                ),
+                Container(
+                  height: 800,
+                  child: ListTile(
+                    title: Text("哈哈"),
+                  ),
+                )
+              ],
+            ),
+            onNotification: (ScrollNotification){
+              if(ScrollNotification is ScrollUpdateNotification && ScrollNotification.depth == 0){
+                //滚动切实列表滚动的时候
+                _onScroll(ScrollNotification.metrics.pixels);
+              }
+              return true;
+            },
+          )
+      )
     );
   }
 
